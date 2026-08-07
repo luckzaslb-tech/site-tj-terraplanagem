@@ -1,0 +1,370 @@
+"use client";
+
+import Image from "next/image";
+import { ArrowDownRight, Check, ChevronRight, Clock3, HardHat, Instagram, MapPin, Menu, MessageCircle, Phone, Star, Truck, X } from "lucide-react";
+import { useState } from "react";
+
+const phone = "5524981023864";
+const whatsapp = `https://wa.me/${phone}?text=${encodeURIComponent("Olá! Gostaria de solicitar um orçamento para minha obra.")}`;
+
+const getEquipmentWhatsapp = (title: string) =>
+  `https://wa.me/${phone}?text=${encodeURIComponent(`Olá! Gostaria de solicitar um orçamento para ${title}.`)}`;
+
+const services = [
+  ["01", "Terraplanagem", "Preparação completa do solo para sua obra começar com base sólida."],
+  ["02", "Escavações", "Precisão e segurança em escavações para fundações, valas e projetos especiais."],
+  ["03", "Aterros e nivelamento", "Regularização de terrenos com técnica, agilidade e acabamento profissional."],
+  ["04", "Locação de equipamentos", "Máquinas confiáveis para manter o ritmo e a produtividade da sua obra."],
+];
+
+const equipment = [
+  ["Escavadeira hidráulica", "Potência e precisão para grandes movimentações.", "/images/escavadeira-hidraulica.png"],
+  ["Máquinas para terraplanagem", "Soluções adequadas para cada tipo de terreno.", "/images/maquinas-para-terraplanagem.png"],
+  ["Operação especializada", "Equipe preparada para trabalhar com segurança.", "/images/operacao-especializada.png"],
+];
+
+const videos = [
+  ["/videos/video1.mp4", "Preparação e nivelamento em campo"],
+  ["/videos/video2.mp4", "Operação especializada em obra"],
+  ["/videos/video3.mp4", "Movimentação de terra e escavação"]
+];
+
+export default function Home() {
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  return (
+    <main className="relative overflow-hidden bg-stone-50 text-slate-800 antialiased">
+      <a href="#conteudo" className="skip-link">Pular para o conteúdo</a>
+
+      {/* Floating Mobile/Desktop WhatsApp Button */}
+      <a
+        href={whatsapp}
+        target="_blank"
+        rel="noreferrer"
+        aria-label="Falar pelo WhatsApp"
+        className="fixed bottom-5 right-5 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-emerald-500 text-white shadow-2xl transition duration-300 hover:scale-110 hover:bg-emerald-600 focus:outline-none focus:ring-4 focus:ring-emerald-400/50"
+      >
+        <MessageCircle size={28} className="fill-white/20" />
+      </a>
+
+      {/* Header */}
+      <header className="fixed inset-x-0 top-0 z-40 border-b border-white/10 bg-slate-950/85 backdrop-blur-md">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3.5 sm:px-6 lg:px-8">
+          <a href="#inicio" aria-label="TJ Terraplanagem — início" className="flex items-center gap-3">
+            <Image src="/images/logo.jpg" alt="TJ Terraplanagem" width={44} height={44} className="h-11 w-11 rounded-md" />
+            <span className="text-xs font-bold uppercase tracking-[.14em] text-white sm:text-sm">
+              TJ<br />Terraplanagem
+            </span>
+          </a>
+          <nav className="hidden items-center gap-7 text-sm font-medium text-white/85 lg:flex" aria-label="Navegação principal">
+            {[["Sobre", "sobre"], ["Serviços", "servicos"], ["Equipamentos", "equipamentos"], ["Galeria", "galeria"], ["Contato", "contato"]].map(([label, id]) => (
+              <a key={id} href={`#${id}`} className="transition hover:text-amber-400">{label}</a>
+            ))}
+            <a href={whatsapp} target="_blank" rel="noreferrer" className="button button-small rounded-lg">
+              Orçamento <ArrowDownRight size={16} />
+            </a>
+          </nav>
+          <div className="flex items-center gap-3 lg:hidden">
+            <a href={whatsapp} target="_blank" rel="noreferrer" className="button button-small px-3 py-2 text-[11px] rounded-lg">
+              Orçamento
+            </a>
+            <button
+              onClick={() => setMenuOpen(!menuOpen)}
+              aria-expanded={menuOpen}
+              aria-label="Abrir menu"
+              className="grid h-11 w-11 place-items-center rounded-xl bg-white/10 text-white transition active:scale-95"
+            >
+              {menuOpen ? <X size={22} /> : <Menu size={22} />}
+            </button>
+          </div>
+        </div>
+
+        {/* Mobile Menu */}
+        {menuOpen && (
+          <nav className="mx-4 mb-4 grid gap-2 rounded-2xl border border-white/15 bg-slate-950/95 p-5 text-white shadow-2xl backdrop-blur-xl lg:hidden" aria-label="Menu mobile">
+            {[["Sobre", "sobre"], ["Serviços", "servicos"], ["Equipamentos", "equipamentos"], ["Galeria", "galeria"], ["Contato", "contato"]].map(([label, id]) => (
+              <a
+                onClick={() => setMenuOpen(false)}
+                key={id}
+                href={`#${id}`}
+                className="flex items-center justify-between rounded-xl px-4 py-3 text-base font-semibold text-slate-100 transition hover:bg-white/10 active:bg-white/15"
+              >
+                {label}
+                <ChevronRight size={18} className="text-white/40" />
+              </a>
+            ))}
+            <a href={whatsapp} target="_blank" rel="noreferrer" className="button mt-3 w-full justify-center rounded-xl py-3.5">
+              Falar pelo WhatsApp <ArrowDownRight size={18} />
+            </a>
+          </nav>
+        )}
+      </header>
+
+      {/* Hero Section */}
+      <section id="inicio" className="relative isolate flex min-h-[90vh] items-end bg-slate-950 pb-16 pt-28 text-white sm:min-h-dvh sm:pt-32 lg:items-center lg:pb-0">
+        <video className="absolute inset-0 -z-20 h-full w-full object-cover" autoPlay muted loop playsInline preload="auto">
+          <source src="/hero.mp4" type="video/mp4" />
+        </video>
+        <div className="absolute inset-0 -z-10 bg-gradient-to-t from-slate-950 via-slate-950/75 to-slate-950/40 lg:bg-gradient-to-r lg:from-slate-950 lg:via-slate-950/75 lg:to-slate-950/25" />
+        <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="max-w-4xl">
+            <p className="eyebrow">Paraíba do Sul • Rio de Janeiro</p>
+            <h1 className="mt-4 font-display text-5xl font-bold uppercase leading-[.9] tracking-tight sm:text-7xl lg:text-9xl">
+              O terreno certo<br /><span className="text-amber-400">para grandes</span><br />projetos.
+            </h1>
+            <p className="mt-5 max-w-xl text-sm leading-6 text-slate-200 sm:text-lg sm:leading-7">
+              Terraplanagem, escavações e locação de equipamentos com a força, o cuidado e a pontualidade que a sua obra exige.
+            </p>
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <a href={whatsapp} target="_blank" rel="noreferrer" className="button w-full justify-center rounded-xl sm:w-auto">
+                Solicitar orçamento <ArrowDownRight size={19} />
+              </a>
+              <a href="#servicos" className="button button-outline w-full justify-center rounded-xl sm:w-auto">
+                Conhecer serviços <ChevronRight size={18} />
+              </a>
+            </div>
+          </div>
+        </div>
+        <a href="#sobre" className="absolute bottom-7 right-6 hidden items-center gap-3 text-xs font-bold uppercase tracking-widest text-white/80 lg:flex">
+          <span className="grid h-11 w-11 place-items-center rounded-full border border-white/30"><ArrowDownRight size={18} /></span> Role para descobrir
+        </a>
+      </section>
+
+      {/* Trust & Ratings Bar */}
+      <section id="conteudo" className="border-y border-stone-200 bg-white py-5">
+        <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4 px-4 text-xs font-semibold uppercase tracking-[.12em] text-slate-600 sm:text-sm lg:px-8">
+          <span className="flex items-center gap-2 font-bold text-slate-900">
+            <Star className="fill-amber-500 text-amber-500" size={18} /> 5,0 no Google
+          </span>
+          <span className="hidden h-1.5 w-1.5 rounded-full bg-amber-500 sm:block" />
+          <span>14 avaliações</span>
+          <span className="hidden h-1.5 w-1.5 rounded-full bg-amber-500 sm:block" />
+          <span>Atendimento regional</span>
+          <span className="hidden h-1.5 w-1.5 rounded-full bg-amber-500 sm:block" />
+          <span>Equipamentos próprios</span>
+        </div>
+      </section>
+
+      {/* Sobre Section */}
+      <section id="sobre" className="section">
+        <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-2 lg:items-center lg:gap-20 lg:px-8">
+          <div className="relative overflow-hidden rounded-2xl shadow-xl">
+            <Image src="/images/escavadeira-hidraulica.png" alt="Escavadeira da TJ Terraplanagem em operação" width={696} height={687} className="aspect-square w-full object-cover" />
+            <div className="absolute bottom-4 right-4 rounded-xl bg-amber-400 px-5 py-3.5 text-slate-950 shadow-lg sm:bottom-6 sm:right-6">
+              <strong className="block font-display text-3xl leading-none sm:text-4xl">TJ</strong>
+              <span className="text-[10px] font-bold uppercase tracking-[.18em]">Terraplanagem</span>
+            </div>
+          </div>
+          <div>
+            <p className="eyebrow eyebrow-dark">Sobre a empresa</p>
+            <h2 className="headline">A base do seu projeto começa aqui.</h2>
+            <p className="copy mt-4">
+              A TJ Terraplanagem atua com soluções completas para preparar terrenos e manter obras em movimento. Unimos equipamentos confiáveis, operação especializada e compromisso com cada prazo.
+            </p>
+            <p className="copy mt-4">
+              Do primeiro corte ao acabamento final, trabalhamos com planejamento, segurança e atenção aos detalhes — porque uma obra bem executada começa no solo.
+            </p>
+            <div className="mt-8 grid gap-3 sm:grid-cols-2">
+              {["Equipe especializada", "Segurança em cada etapa", "Atendimento ágil", "Qualidade no acabamento"].map(item => (
+                <div key={item} className="flex items-center gap-3 rounded-xl bg-white p-3 font-semibold shadow-sm border border-stone-200/80">
+                  <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-amber-400 text-slate-950">
+                    <Check size={16} />
+                  </span>
+                  <span className="text-sm text-slate-800">{item}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Serviços Section */}
+      <section id="servicos" className="bg-slate-950 py-20 text-white sm:py-32">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="max-w-2xl">
+            <p className="eyebrow">O que fazemos</p>
+            <h2 className="headline text-white">Soluções que movem sua obra.</h2>
+            <p className="mt-4 text-sm leading-6 text-slate-300 sm:text-base sm:leading-7">
+              Estrutura, técnica e os equipamentos certos para transformar seu terreno em um novo começo.
+            </p>
+          </div>
+          <div className="mt-12 grid border-t border-white/15 md:grid-cols-2">
+            {services.map(([number, title, text]) => (
+              <article key={title} className="group border-b border-white/15 py-7 sm:py-8 md:pr-10 even:md:border-l even:md:pl-10">
+                <div className="flex justify-between">
+                  <span className="font-display text-2xl text-amber-400">{number}</span>
+                  <ArrowDownRight className="text-white/30 transition duration-200 group-hover:translate-x-1 group-hover:translate-y-1 group-hover:text-amber-400" />
+                </div>
+                <h3 className="mt-6 text-xl font-bold sm:text-2xl">{title}</h3>
+                <p className="mt-3 max-w-sm text-sm leading-6 text-slate-300 sm:text-base sm:leading-7">{text}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Equipamentos Section */}
+      <section id="equipamentos" className="section bg-stone-100">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col justify-between gap-4 md:flex-row md:items-end">
+            <div>
+              <p className="eyebrow eyebrow-dark">Nossa estrutura</p>
+              <h2 className="headline">Equipamento à altura do desafio.</h2>
+            </div>
+            <a href={whatsapp} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-orange-700 underline decoration-amber-400 decoration-2 underline-offset-8">
+              Consultar disponibilidade <ArrowDownRight size={14} />
+            </a>
+          </div>
+          <div className="mt-12 grid gap-6 md:grid-cols-3">
+            {equipment.map(([title, text, imgSrc]) => (
+              <article key={title} className="group flex flex-col justify-between overflow-hidden rounded-2xl border border-stone-200 bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-lg">
+                <div>
+                  <div className="relative aspect-[4/3] overflow-hidden bg-slate-950">
+                    <Image src={imgSrc} alt={title} fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover transition duration-500 group-hover:scale-105" />
+                    <span className="absolute top-3 right-3 rounded-full bg-slate-950/80 backdrop-blur-md px-3 py-1 text-[11px] font-bold text-amber-400 border border-white/10">
+                      Disponível
+                    </span>
+                  </div>
+                  <div className="p-6">
+                    <div className="flex items-center gap-2.5 text-amber-600">
+                      <Truck size={20} />
+                      <span className="text-xs font-bold uppercase tracking-wider text-slate-500">TJ Frota</span>
+                    </div>
+                    <h3 className="mt-3 text-xl font-bold text-slate-900">{title}</h3>
+                    <p className="mt-2 text-sm leading-6 text-slate-600">{text}</p>
+                  </div>
+                </div>
+                <div className="p-6 pt-0">
+                  <a href={getEquipmentWhatsapp(title)} target="_blank" rel="noreferrer" className="button w-full justify-center rounded-xl py-3 text-xs">
+                    Solicitar este equipamento <ArrowDownRight size={16} />
+                  </a>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Galeria de Vídeos Section */}
+      <section id="galeria" className="section bg-white">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <p className="eyebrow eyebrow-dark">Obras em campo</p>
+          <div className="flex flex-col justify-between gap-4 md:flex-row md:items-end">
+            <h2 className="headline">Força que se vê<br />em cada terreno.</h2>
+            <p className="max-w-sm text-sm leading-6 text-slate-600 sm:text-base sm:leading-7">
+              Registros em vídeo de quem está todos os dias construindo a base de novas possibilidades.
+            </p>
+          </div>
+          <div className="mt-12 grid gap-6 md:grid-cols-3">
+            {videos.map(([src, label], idx) => (
+              <div key={src} className="group relative min-h-[380px] overflow-hidden rounded-2xl bg-slate-950 shadow-xl transition duration-300 hover:shadow-2xl sm:min-h-[440px]">
+                <video autoPlay loop muted playsInline className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105">
+                  <source src={src} type="video/mp4" />
+                </video>
+                <div className="absolute inset-0 bg-slate-950/40 transition duration-300 group-hover:bg-slate-950/25" />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/30 to-transparent" />
+                <div className="absolute bottom-0 inset-x-0 p-6 text-white">
+                  <span className="inline-block rounded-full bg-amber-400 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-slate-950 mb-2">
+                    Vídeo 0{idx + 1}
+                  </span>
+                  <p className="text-base font-bold text-white leading-snug">{label}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Depoimentos / Avaliações */}
+      <section className="bg-amber-400 py-20 sm:py-32">
+        <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-[1.2fr_.8fr] lg:items-end lg:px-8">
+          <div>
+            <p className="eyebrow text-slate-800">A confiança de quem contratou</p>
+            <blockquote className="mt-5 font-display text-3xl font-bold uppercase leading-tight text-slate-950 sm:text-5xl">
+              “Ótimo serviço prestado, empresa com excelência e qualidade.”
+            </blockquote>
+            <p className="mt-5 flex items-center gap-2 font-bold text-slate-900">
+              <span className="flex text-slate-950">
+                {[1, 2, 3, 4, 5].map(i => <Star key={i} size={18} className="fill-slate-950" />)}
+              </span> Avaliação no Google
+            </p>
+          </div>
+          <div className="border-t border-slate-950/20 pt-8 lg:border-l lg:border-t-0 lg:pl-12 lg:pt-0">
+            <p className="text-lg font-semibold leading-7 text-slate-900 sm:text-xl sm:leading-8">
+              “Excelente serviço, bem feito, pontuais e super responsáveis.”
+            </p>
+            <p className="mt-4 font-bold text-slate-800">Cliente TJ Terraplanagem</p>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="relative isolate overflow-hidden bg-slate-950 py-20 text-white sm:py-32">
+        <div className="absolute inset-0 -z-20 grid h-full w-full grid-cols-1 md:grid-cols-3">
+          <div className="relative h-full w-full min-h-[220px]"><Image src="/images/escavadeira-hidraulica.png" alt="Escavadeira Hidráulica" fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover" /></div>
+          <div className="relative h-full w-full min-h-[220px]"><Image src="/images/maquinas-para-terraplanagem.png" alt="Máquinas para Terraplanagem" fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover" /></div>
+          <div className="relative h-full w-full min-h-[220px]"><Image src="/images/operacao-especializada.png" alt="Operação Especializada" fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover" /></div>
+        </div>
+        <div className="absolute inset-0 -z-10 bg-slate-950/80 backdrop-blur-[1px]" />
+        <div className="relative z-10 mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
+          <HardHat className="mx-auto text-amber-400" size={44} />
+          <p className="eyebrow mt-6">Vamos construir juntos?</p>
+          <h2 className="mx-auto mt-4 max-w-4xl font-display text-4xl font-bold uppercase leading-[.92] sm:text-6xl lg:text-7xl">
+            Precisa preparar o terreno<br /><span className="text-amber-400">para sua próxima obra?</span>
+          </h2>
+          <a href={whatsapp} target="_blank" rel="noreferrer" className="button mt-8 w-full justify-center rounded-xl py-4 sm:w-auto">
+            Falar pelo WhatsApp <ArrowDownRight size={19} />
+          </a>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer id="contato" className="bg-white pt-16 sm:pt-20">
+        <div className="mx-auto grid max-w-7xl gap-10 px-4 pb-16 sm:px-6 lg:grid-cols-[1fr_1.2fr] lg:px-8">
+          <div>
+            <Image src="/images/logo.jpg" alt="TJ Terraplanagem" width={70} height={70} className="h-16 w-16 rounded-lg" />
+            <h2 className="mt-5 font-display text-3xl font-bold uppercase leading-none text-slate-950 sm:text-4xl">
+              Pronto para<br />começar?
+            </h2>
+            <a href={whatsapp} target="_blank" rel="noreferrer" className="mt-6 inline-flex items-center gap-2 text-lg font-bold text-orange-700 hover:text-orange-800">
+              <Phone size={20} /> (24) 98102-3864
+            </a>
+          </div>
+          <div className="grid gap-8 border-t border-stone-200 pt-8 sm:grid-cols-2 lg:border-t-0 lg:pt-0">
+            <div>
+              <MapPin className="text-amber-600" size={22} />
+              <h3 className="mt-3 font-bold text-slate-900">Atendimento</h3>
+              <p className="mt-2 text-sm leading-6 text-slate-600">
+                Estr. Quirino Francisco Pinheiro<br />
+                Vila Salutaris, Paraíba do Sul – RJ<br />
+                CEP 25850-000
+              </p>
+            </div>
+            <div>
+              <Clock3 className="text-amber-600" size={22} />
+              <h3 className="mt-3 font-bold text-slate-900">Fale conosco</h3>
+              <p className="mt-2 text-sm leading-6 text-slate-600">
+                Solicite seu orçamento pelo WhatsApp. Nossa equipe retornará o mais breve possível.
+              </p>
+              <a
+                aria-label="Instagram da TJ Terraplanagem"
+                href="https://www.instagram.com/tj_terraplanagem_/"
+                target="_blank"
+                rel="noreferrer"
+                className="mt-4 inline-flex h-11 w-11 items-center justify-center rounded-full border border-stone-300 text-slate-950 transition hover:border-amber-500 hover:bg-amber-400"
+              >
+                <Instagram size={19} />
+              </a>
+            </div>
+          </div>
+        </div>
+        <div className="border-t border-stone-200 bg-stone-50 py-6">
+          <div className="mx-auto flex max-w-7xl flex-col items-center gap-2 px-4 text-center text-xs text-slate-500 sm:flex-row sm:justify-between sm:text-left lg:px-8">
+            <span>© {new Date().getFullYear()} TJ Terraplanagem LTDA. Todos os direitos reservados.</span>
+            <span>Terraplanagem • Escavação • Locação de Equipamentos</span>
+          </div>
+        </div>
+      </footer>
+    </main>
+  );
+}

@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root { --ink: #0f172a; --orange: #fbbf24; }
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; font-family: Arial, Helvetica, sans-serif; }
+.font-display { font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif; font-weight: 500; }
+.hero-fallback { background-image: url('/images/maquina-por-do-sol.png'); animation: hero-scale 18s ease-out infinite alternate; }
+.section { padding: 4.5rem 0; }
+.eyebrow { font-size: .72rem; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; color: #fbbf24; }
+.eyebrow-dark { color: #c2410c; }
+.headline { margin-top: 0.75rem; font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif; font-size: clamp(2.5rem, 5.5vw, 5.5rem); font-weight: 500; line-height: .92; text-transform: uppercase; color: #0f172a; }
+.copy { max-width: 39rem; font-size: 1rem; line-height: 1.7; color: #475569; }
+.button { display: inline-flex; min-height: 48px; align-items: center; justify-content: center; gap: .65rem; background: #fbbf24; padding: .8rem 1.25rem; color: #0f172a; font-size: .78rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; border-radius: 0.75rem; transition: transform 200ms ease, background 200ms ease, box-shadow 200ms ease; }
+.button:hover { transform: translateY(-2px); background: #f59e0b; box-shadow: 0 10px 20px -5px rgba(245, 158, 11, 0.4); }
+.button:focus-visible, a:focus-visible, button:focus-visible { outline: 3px solid #fbbf24; outline-offset: 4px; }
+.button-small { min-height: 40px; padding: .6rem 1rem; font-size: .69rem; border-radius: 0.5rem; }
+.button-outline { border: 1px solid rgb(255 255 255 / .45); background: rgba(15, 23, 42, 0.4); color: white; backdrop-filter: blur(4px); }
+.button-outline:hover { background: white; color: #0f172a; }
+.skip-link { position: absolute; z-index: 100; top: -4rem; left: 1rem; background: white; padding: .7rem 1rem; color: #0f172a; }
+.skip-link:focus { top: 1rem; }
+@keyframes hero-scale { from { transform: scale(1); } to { transform: scale(1.08); } }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; } }
+@media (min-width: 640px) { .section { padding: 7rem 0; } }
