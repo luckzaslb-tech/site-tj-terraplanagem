@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 const siteUrl = "https://site-tj-terraplanagem.pages.dev";
-const ogImageUrl = `${siteUrl}/images/maquina-por-do-sol.png`;
+const ogImageUrl = `${siteUrl}/images/og-image.jpg`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   description: "Terraplanagem, escavações e locação de equipamentos em Paraíba do Sul - RJ e região.",
   openGraph: {
     title: "TJ Terraplanagem | O terreno certo para grandes projetos",
-    description: "Terraplanagem, escavações e locação de equipamentos com força, cuidado e pontualidade.",
+    description: "Terraplanagem, escavações e locação de equipamentos em Paraíba do Sul - RJ e região.",
     url: siteUrl,
     siteName: "TJ Terraplanagem",
     images: [
@@ -18,6 +18,7 @@ export const metadata: Metadata = {
         url: ogImageUrl,
         width: 1200,
         height: 630,
+        type: "image/jpeg",
         alt: "TJ Terraplanagem - Escavadeira em operação",
       },
     ],
@@ -36,11 +37,17 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="pt-BR">
       <head>
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={siteUrl} />
+        <meta property="og:title" content="TJ Terraplanagem | O terreno certo para grandes projetos" />
+        <meta property="og:description" content="Terraplanagem, escavações e locação de equipamentos em Paraíba do Sul - RJ e região." />
         <meta property="og:image" content={ogImageUrl} />
         <meta property="og:image:secure_url" content={ogImageUrl} />
+        <meta property="og:image:type" content="image/jpeg" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
-        <meta property="og:image:type" content="image/png" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:image" content={ogImageUrl} />
       </head>
       <body>{children}</body>
     </html>
