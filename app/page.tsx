@@ -1,8 +1,24 @@
 "use client";
 
 import Image from "next/image";
-import { ArrowDownRight, Check, ChevronRight, Clock3, HardHat, Instagram, MapPin, Menu, MessageCircle, Phone, Star, Truck, X } from "lucide-react";
-import { useState } from "react";
+import {
+  ArrowDownRight,
+  Check,
+  ChevronRight,
+  Clock3,
+  HardHat,
+  Home as HomeIcon,
+  Instagram,
+  Layers,
+  MapPin,
+  Menu,
+  MessageCircle,
+  Phone,
+  Star,
+  Truck,
+  X,
+} from "lucide-react";
+import { useEffect, useState } from "react";
 
 const phone = "5524981023864";
 const whatsapp = `https://wa.me/${phone}?text=${encodeURIComponent("Olá! Gostaria de solicitar um orçamento para minha obra.")}`;
@@ -26,32 +42,70 @@ const equipment = [
 const videos = [
   ["/videos/video1.mp4", "Preparação e nivelamento em campo"],
   ["/videos/video2.mp4", "Operação especializada em obra"],
-  ["/videos/video3.mp4", "Movimentação de terra e escavação"]
+  ["/videos/video3.mp4", "Movimentação de terra e escavação"],
 ];
 
 export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <main className="relative overflow-hidden bg-stone-50 text-slate-800 antialiased">
       <a href="#conteudo" className="skip-link">Pular para o conteúdo</a>
 
-      {/* Floating Mobile/Desktop WhatsApp Button */}
-      <a
-        href={whatsapp}
-        target="_blank"
-        rel="noreferrer"
-        aria-label="Falar pelo WhatsApp"
-        className="fixed bottom-5 right-5 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-emerald-500 text-white shadow-2xl transition duration-300 hover:scale-110 hover:bg-emerald-600 focus:outline-none focus:ring-4 focus:ring-emerald-400/50"
-      >
-        <MessageCircle size={28} className="fill-white/20" />
-      </a>
+      {/* Floating Bottom Pill Navigation Bar (Mobile Only - Matching Reference Screenshot) */}
+      <div className="fixed bottom-4 left-1/2 z-50 flex w-[92%] max-w-sm -translate-x-1/2 items-center justify-between rounded-full border border-stone-200/90 bg-white/95 px-3 py-1.5 shadow-[0_10px_35px_rgba(0,0,0,0.18)] backdrop-blur-xl lg:hidden">
+        <a href="#inicio" className="flex flex-col items-center px-2 py-1 text-slate-600 transition hover:text-amber-500 active:scale-95">
+          <HomeIcon size={19} />
+          <span className="mt-0.5 text-[10px] font-bold">Início</span>
+        </a>
+        <a href="#servicos" className="flex flex-col items-center px-2 py-1 text-slate-600 transition hover:text-amber-500 active:scale-95">
+          <Layers size={19} />
+          <span className="mt-0.5 text-[10px] font-bold">Serviços</span>
+        </a>
 
-      {/* Header */}
-      <header className="fixed inset-x-0 top-0 z-40 border-b border-white/10 bg-slate-950/85 backdrop-blur-md">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3.5 sm:px-6 lg:px-8">
+        {/* Highlighted Center WhatsApp Circle Button */}
+        <a
+          href={whatsapp}
+          target="_blank"
+          rel="noreferrer"
+          className="group relative -mt-6 flex flex-col items-center"
+        >
+          <span className="flex h-13 w-13 items-center justify-center rounded-full bg-emerald-500 text-white shadow-[0_4px_20px_rgba(16,185,129,0.5)] border-[3px] border-slate-950 transition duration-300 active:scale-95 group-hover:bg-emerald-600">
+            <MessageCircle size={24} className="fill-white/20" />
+          </span>
+          <span className="mt-0.5 text-[10px] font-black uppercase tracking-wider text-emerald-600">WhatsApp</span>
+        </a>
+
+        <a href="#equipamentos" className="flex flex-col items-center px-2 py-1 text-slate-600 transition hover:text-amber-500 active:scale-95">
+          <Truck size={19} />
+          <span className="mt-0.5 text-[10px] font-bold">Frota</span>
+        </a>
+        <a href="#contato" className="flex flex-col items-center px-2 py-1 text-slate-600 transition hover:text-amber-500 active:scale-95">
+          <Phone size={19} />
+          <span className="mt-0.5 text-[10px] font-bold">Contato</span>
+        </a>
+      </div>
+
+      {/* Header - Transparent initially, frosted glass on scroll */}
+      <header
+        className={`fixed inset-x-0 top-0 z-40 transition-all duration-300 ${
+          scrolled
+            ? "border-b border-white/10 bg-slate-950/90 py-3 shadow-lg backdrop-blur-md"
+            : "border-b border-transparent bg-transparent py-4 sm:py-5"
+        }`}
+      >
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
           <a href="#inicio" aria-label="TJ Terraplanagem — início" className="flex items-center gap-3">
-            <Image src="/images/logo.jpg" alt="TJ Terraplanagem" width={44} height={44} className="h-11 w-11 rounded-md" />
+            <Image src="/images/logo.jpg" alt="TJ Terraplanagem" width={44} height={44} className="h-11 w-11 rounded-md shadow-md" />
             <span className="text-xs font-bold uppercase tracking-[.14em] text-white sm:text-sm">
               TJ<br />Terraplanagem
             </span>
@@ -65,23 +119,23 @@ export default function Home() {
             </a>
           </nav>
           <div className="flex items-center gap-3 lg:hidden">
-            <a href={whatsapp} target="_blank" rel="noreferrer" className="button button-small px-3 py-2 text-[11px] rounded-lg">
+            <a href={whatsapp} target="_blank" rel="noreferrer" className="button button-small px-3.5 py-2 text-[11px] font-extrabold uppercase rounded-lg">
               Orçamento
             </a>
             <button
               onClick={() => setMenuOpen(!menuOpen)}
               aria-expanded={menuOpen}
               aria-label="Abrir menu"
-              className="grid h-11 w-11 place-items-center rounded-xl bg-white/10 text-white transition active:scale-95"
+              className="grid h-11 w-11 place-items-center rounded-xl bg-white/15 text-white backdrop-blur-md transition active:scale-95"
             >
               {menuOpen ? <X size={22} /> : <Menu size={22} />}
             </button>
           </div>
         </div>
 
-        {/* Mobile Menu */}
+        {/* Mobile Dropdown Drawer */}
         {menuOpen && (
-          <nav className="mx-4 mb-4 grid gap-2 rounded-2xl border border-white/15 bg-slate-950/95 p-5 text-white shadow-2xl backdrop-blur-xl lg:hidden" aria-label="Menu mobile">
+          <nav className="mx-4 mt-2 grid gap-2 rounded-2xl border border-white/15 bg-slate-950/95 p-5 text-white shadow-2xl backdrop-blur-xl lg:hidden" aria-label="Menu mobile">
             {[["Sobre", "sobre"], ["Serviços", "servicos"], ["Equipamentos", "equipamentos"], ["Galeria", "galeria"], ["Contato", "contato"]].map(([label, id]) => (
               <a
                 onClick={() => setMenuOpen(false)}
@@ -101,33 +155,48 @@ export default function Home() {
       </header>
 
       {/* Hero Section */}
-      <section id="inicio" className="relative isolate flex min-h-[90vh] items-end bg-slate-950 pb-16 pt-28 text-white sm:min-h-dvh sm:pt-32 lg:items-center lg:pb-0">
+      <section id="inicio" className="relative isolate flex min-h-dvh items-end bg-slate-950 pb-24 pt-28 text-white sm:pb-16 sm:pt-32 lg:items-center lg:pb-0">
         <video className="absolute inset-0 -z-20 h-full w-full object-cover" autoPlay muted loop playsInline preload="auto">
           <source src="/hero.mp4" type="video/mp4" />
         </video>
-        <div className="absolute inset-0 -z-10 bg-gradient-to-t from-slate-950 via-slate-950/75 to-slate-950/40 lg:bg-gradient-to-r lg:from-slate-950 lg:via-slate-950/75 lg:to-slate-950/25" />
+        <div className="absolute inset-0 -z-10 bg-gradient-to-t from-slate-950 via-slate-950/65 to-slate-950/30 lg:bg-gradient-to-r lg:from-slate-950 lg:via-slate-950/70 lg:to-slate-950/20" />
+        
         <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl">
-            <p className="eyebrow">Paraíba do Sul • Rio de Janeiro</p>
-            <h1 className="mt-4 font-display text-5xl font-bold uppercase leading-[.9] tracking-tight sm:text-7xl lg:text-9xl">
+            {/* Rating Glass Badge above Headline (Matching Reference Screenshot) */}
+            <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3.5 py-1.5 text-xs font-semibold text-white backdrop-blur-md">
+              <span className="flex text-amber-400">
+                {[1, 2, 3, 4, 5].map(i => <Star key={i} size={12} className="fill-amber-400" />)}
+              </span>
+              <span className="font-bold text-amber-300">5,0 no Google</span>
+              <span className="text-white/40">•</span>
+              <span className="text-slate-200">Paraíba do Sul • RJ</span>
+            </div>
+
+            <h1 className="mt-4 font-display text-5xl font-bold uppercase leading-[.88] tracking-tight sm:text-7xl lg:text-9xl">
               O terreno certo<br /><span className="text-amber-400">para grandes</span><br />projetos.
             </h1>
             <p className="mt-5 max-w-xl text-sm leading-6 text-slate-200 sm:text-lg sm:leading-7">
               Terraplanagem, escavações e locação de equipamentos com a força, o cuidado e a pontualidade que a sua obra exige.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <a href={whatsapp} target="_blank" rel="noreferrer" className="button w-full justify-center rounded-xl sm:w-auto">
+              <a href={whatsapp} target="_blank" rel="noreferrer" className="button w-full justify-center rounded-xl py-3.5 sm:w-auto">
                 Solicitar orçamento <ArrowDownRight size={19} />
               </a>
-              <a href="#servicos" className="button button-outline w-full justify-center rounded-xl sm:w-auto">
+              <a href="#servicos" className="button button-outline w-full justify-center rounded-xl py-3.5 sm:w-auto">
                 Conhecer serviços <ChevronRight size={18} />
               </a>
             </div>
           </div>
         </div>
-        <a href="#sobre" className="absolute bottom-7 right-6 hidden items-center gap-3 text-xs font-bold uppercase tracking-widest text-white/80 lg:flex">
-          <span className="grid h-11 w-11 place-items-center rounded-full border border-white/30"><ArrowDownRight size={18} /></span> Role para descobrir
-        </a>
+
+        {/* Scroll Indicator Icon at Bottom Center (Matching Reference Screenshot) */}
+        <div className="absolute bottom-6 left-1/2 flex -translate-x-1/2 flex-col items-center gap-1 text-white/60 sm:bottom-8 lg:left-auto lg:right-6 lg:translate-x-0">
+          <div className="flex h-7 w-4.5 items-start justify-center rounded-full border-2 border-white/40 p-1">
+            <div className="h-1.5 w-1 animate-pulse rounded-full bg-amber-400" />
+          </div>
+          <span className="text-[9px] font-black uppercase tracking-[.25em] text-white/50">Scroll</span>
+        </div>
       </section>
 
       {/* Trust & Ratings Bar */}
@@ -319,7 +388,7 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer id="contato" className="bg-white pt-16 sm:pt-20">
+      <footer id="contato" className="bg-white pb-28 pt-16 sm:pb-20 sm:pt-20">
         <div className="mx-auto grid max-w-7xl gap-10 px-4 pb-16 sm:px-6 lg:grid-cols-[1fr_1.2fr] lg:px-8">
           <div>
             <Image src="/images/logo.jpg" alt="TJ Terraplanagem" width={70} height={70} className="h-16 w-16 rounded-lg" />
