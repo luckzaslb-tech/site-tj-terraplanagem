@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 const siteUrl = "https://site-tj-terraplanagem.pages.dev";
-const ogImageUrl = `${siteUrl}/images/og-image.jpg`;
+const ogImageUrl = `${siteUrl}/images/og-image.jpg?v=3`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
         width: 1200,
         height: 630,
         type: "image/jpeg",
-        alt: "TJ Terraplanagem - Escavadeira em operação",
+        alt: "TJ Terraplanagem - Escavadeira CAT 312D ao pôr do sol",
       },
     ],
     locale: "pt_BR",
@@ -39,6 +39,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <head>
         <meta property="og:type" content="website" />
         <meta property="og:url" content={siteUrl} />
+        <meta property="og:site_name" content="TJ Terraplanagem" />
         <meta property="og:title" content="TJ Terraplanagem | O terreno certo para grandes projetos" />
         <meta property="og:description" content="Terraplanagem, escavações e locação de equipamentos em Paraíba do Sul - RJ e região." />
         <meta property="og:image" content={ogImageUrl} />
