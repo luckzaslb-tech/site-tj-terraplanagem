@@ -21,10 +21,10 @@ import {
 import { useEffect, useState } from "react";
 
 const phone = "5524981023864";
-const whatsapp = `https://wa.me/${phone}?text=${encodeURIComponent("Olá! Gostaria de solicitar um orçamento para minha obra.")}`;
+const whatsapp = `https://wa.me/${phone}?text=${encodeURIComponent("Olá! Vim pelo site e gostaria de solicitar um orçamento para minha obra.")}`;
 
 const getEquipmentWhatsapp = (title: string) =>
-  `https://wa.me/${phone}?text=${encodeURIComponent(`Olá! Gostaria de solicitar um orçamento para ${title}.`)}`;
+  `https://wa.me/${phone}?text=${encodeURIComponent(`Olá! Vim pelo site e gostaria de solicitar um orçamento para ${title}.`)}`;
 
 const services = [
   ["01", "Terraplanagem", "Preparação completa do solo para sua obra começar com base sólida."],
@@ -33,10 +33,160 @@ const services = [
   ["04", "Locação de equipamentos", "Máquinas confiáveis para manter o ritmo e a produtividade da sua obra."],
 ];
 
-const equipment = [
-  ["Escavadeira hidráulica", "Potência e precisão para grandes movimentações.", "/images/escavadeira-hidraulica.png"],
-  ["Máquinas para terraplanagem", "Soluções adequadas para cada tipo de terreno.", "/images/maquinas-para-terraplanagem.png"],
-  ["Operação especializada", "Equipe preparada para trabalhar com segurança.", "/images/operacao-especializada.png"],
+interface EquipmentItem {
+  id: string;
+  title: string;
+  category: string;
+  badge?: string;
+  specsBadge: string;
+  imgSrc: string;
+  description: string;
+  features: string[];
+  specs: { label: string; value: string }[];
+  whatsappMsg: string;
+}
+
+const equipmentData: EquipmentItem[] = [
+  {
+    id: "escavadeira-hidraulica",
+    title: "Escavadeira hidráulica",
+    category: "Escavação",
+    badge: "Mais procurado",
+    specsBadge: "22 Toneladas • Caçamba 1.2m³",
+    imgSrc: "/images/escavadeira-hidraulica-card.png",
+    description: "Potência e precisão extrema para escavações profundas, valas, abertura de fundações e grandes movimentações de terra.",
+    features: [
+      "Operador especializado incluso",
+      "Cabine com ar-condicionado",
+      "Manutenção e revisão em dia",
+      "Engate rápido para acessórios"
+    ],
+    specs: [
+      { label: "Peso Operacional", value: "22.000 kg" },
+      { label: "Potência", value: "165 HP" }
+    ],
+    whatsappMsg: "Olá! Vim pelo site e gostaria de solicitar um orçamento para aluguel / operação da Escavadeira hidráulica."
+  },
+  {
+    id: "pa-carregadeira",
+    title: "Pá carregadeira",
+    category: "Carregamento",
+    badge: "Mais procurado",
+    specsBadge: "Caçamba 2.5m³ • Tração 4x4",
+    imgSrc: "/images/pa-carregadeira-card.png",
+    description: "Agilidade e alta capacidade de carga para movimentação rápida de agregados, aterro, terra, pedras e abastecimento de caçambas.",
+    features: [
+      "Caçamba reforçada de 2.5m³",
+      "Chassi articulado 4x4",
+      "Ciclos rápidos de carregamento",
+      "Operador qualificado"
+    ],
+    specs: [
+      { label: "Capacidade", value: "2.5 m³" },
+      { label: "Potência", value: "140 HP" }
+    ],
+    whatsappMsg: "Olá! Vim pelo site e gostaria de solicitar um orçamento para aluguel / operação da Pá carregadeira."
+  },
+  {
+    id: "motoniveladora-patrol",
+    title: "Motoniveladora (Patrol)",
+    category: "Nivelamento",
+    badge: "Alta Precisão",
+    specsBadge: "Lâmina 3.66m • Ripper Traseiro",
+    imgSrc: "/images/motoniveladora-patrol-card.png",
+    description: "Precisão cirúrgica no nivelamento de estradas, regularização de terrenos, conformação de taludes e espalhamento de material.",
+    features: [
+      "Lâmina articulada 360°",
+      "Ripper / escarificador traseiro",
+      "Nivelamento de alta precisão",
+      "Ideal para vias e loteamentos"
+    ],
+    specs: [
+      { label: "Lâmina", value: "3,66 m" },
+      { label: "Potência", value: "180 HP" }
+    ],
+    whatsappMsg: "Olá! Vim pelo site e gostaria de solicitar um orçamento para aluguel / operação da Motoniveladora (Patrol)."
+  },
+  {
+    id: "rolo-compactador",
+    title: "Rolo compactador",
+    category: "Compactação",
+    badge: "Mais procurado",
+    specsBadge: "11.5 Toneladas • Liso / Pé de carneiro",
+    imgSrc: "/images/rolo-compactador-card.png",
+    description: "Alta capacidade de compactação para solos, aterros, sub-bases e pavimentação, garantindo máxima estabilidade do terreno.",
+    features: [
+      "Tambor liso e pé de carneiro",
+      "Sistema vibratório ajustável",
+      "Alta tração em terreno inclinado",
+      "Operação experiente em solo"
+    ],
+    specs: [
+      { label: "Peso Operacional", value: "11.500 kg" },
+      { label: "Largura Tambor", value: "2,13 m" }
+    ],
+    whatsappMsg: "Olá! Vim pelo site e gostaria de solicitar um orçamento para aluguel / operação do Rolo compactador."
+  },
+  {
+    id: "retroescavadeira",
+    title: "Retroescavadeira",
+    category: "Versátil",
+    badge: "Multiuso",
+    specsBadge: "Tração 4x4 • Caçamba Dupla",
+    imgSrc: "/images/retroescavadeira-card.png",
+    description: "A máquina multiuso versátil para obras urbanas e rurais. Une a força da pá carregadeira dianteira com o braço escavador traseiro.",
+    features: [
+      "Pá carregadeira dianteira 1.0m³",
+      "Braço escavador traseiro (5.4m)",
+      "Tração 4x4 reforçada",
+      "Excelente agilidade no canteiro"
+    ],
+    specs: [
+      { label: "Alcance Máx.", value: "5,4 m" },
+      { label: "Potência", value: "95 HP" }
+    ],
+    whatsappMsg: "Olá! Vim pelo site e gostaria de solicitar um orçamento para aluguel / operação da Retroescavadeira."
+  },
+  {
+    id: "caminhao-basculante",
+    title: "Caminhão basculante",
+    category: "Transporte",
+    badge: "Frota Pesada",
+    specsBadge: "Caçamba 15m³ • Tração 6x4",
+    imgSrc: "/images/caminhao-basculante-card.png",
+    description: "Transporte eficiente e escoamento rápido de terra, pedras, entulho e materiais de aterro para manter a obra em ritmo acelerado.",
+    features: [
+      "Caçamba reforçada de 15m³",
+      "Tração 6x4 para aclives e lama",
+      "Motorista profissional habilitado",
+      "Documentação e licenças em dia"
+    ],
+    specs: [
+      { label: "Capacidade", value: "15 m³" },
+      { label: "Tração", value: "6x4 Traçado" }
+    ],
+    whatsappMsg: "Olá! Vim pelo site e gostaria de solicitar um orçamento para transporte com Caminhão basculante."
+  },
+  {
+    id: "trator-esteira",
+    title: "Trator de esteira",
+    category: "Corte & Desmatamento",
+    badge: "Serviço Pesado",
+    specsBadge: "18.5 Toneladas • Lâmina Semi-U",
+    imgSrc: "/images/trator-esteira-card.png",
+    description: "Força bruta para corte de solos duros, destoca, limpeza de vegetação, nivelamento bruto e abertura de caminhos em terreno difícil.",
+    features: [
+      "Esteiras de alta flutuação",
+      "Lâmina frontal articulada",
+      "Escarificador traseiro pesado",
+      "Preparado para terrenos severos"
+    ],
+    specs: [
+      { label: "Peso Operacional", value: "18.500 kg" },
+      { label: "Potência", value: "175 HP" }
+    ],
+    whatsappMsg: "Olá! Vim pelo site e gostaria de solicitar um orçamento para serviço / aluguel do Trator de esteira."
+  }
 ];
 
 const videos = [
@@ -48,6 +198,22 @@ const videos = [
 export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState("Toda a frota");
+
+  const categories = [
+    "Toda a frota",
+    "Escavação",
+    "Carregamento",
+    "Nivelamento",
+    "Compactação",
+    "Versátil",
+    "Transporte",
+    "Corte & Desmatamento"
+  ];
+
+  const filteredEquipment = equipmentData.filter(item =>
+    selectedCategory === "Toda a frota" ? true : item.category === selectedCategory
+  );
 
   useEffect(() => {
     const handleScroll = () => {
@@ -279,39 +445,141 @@ export default function Home() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col justify-between gap-4 md:flex-row md:items-end">
             <div>
-              <p className="eyebrow eyebrow-dark">Nossa estrutura</p>
-              <h2 className="headline">Equipamento à altura do desafio.</h2>
+              <p className="eyebrow eyebrow-dark">Frota & Maquinário</p>
+              <h2 className="headline">Escolha a máquina ideal para a sua obra.</h2>
+              <p className="mt-2 text-sm text-slate-600 max-w-xl">
+                Selecione o equipamento desejado para consultar especificações fictícias e solicitar orçamento diretamente pelo WhatsApp.
+              </p>
             </div>
-            <a href={whatsapp} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-orange-700 underline decoration-amber-400 decoration-2 underline-offset-8">
-              Consultar disponibilidade <ArrowDownRight size={14} />
+            <a
+              href={whatsapp}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-orange-700 underline decoration-amber-400 decoration-2 underline-offset-8 transition hover:text-orange-800"
+            >
+              Consultar toda a frota no WhatsApp <ArrowDownRight size={14} />
             </a>
           </div>
-          <div className="mt-12 grid gap-6 md:grid-cols-3">
-            {equipment.map(([title, text, imgSrc]) => (
-              <article key={title} className="group flex flex-col justify-between overflow-hidden rounded-2xl border border-stone-200 bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-lg">
-                <div>
-                  <div className="relative aspect-[4/3] overflow-hidden bg-slate-950">
-                    <Image src={imgSrc} alt={title} fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover transition duration-500 group-hover:scale-105" />
-                    <span className="absolute top-3 right-3 rounded-full bg-slate-950/80 backdrop-blur-md px-3 py-1 text-[11px] font-bold text-amber-400 border border-white/10">
-                      Disponível
-                    </span>
-                  </div>
-                  <div className="p-6">
-                    <div className="flex items-center gap-2.5 text-amber-600">
-                      <Truck size={20} />
-                      <span className="text-xs font-bold uppercase tracking-wider text-slate-500">TJ Frota</span>
-                    </div>
-                    <h3 className="mt-3 text-xl font-bold text-slate-900">{title}</h3>
-                    <p className="mt-2 text-sm leading-6 text-slate-600">{text}</p>
-                  </div>
-                </div>
-                <div className="p-6 pt-0">
-                  <a href={getEquipmentWhatsapp(title)} target="_blank" rel="noreferrer" className="button w-full justify-center rounded-xl py-3 text-xs">
-                    Solicitar este equipamento <ArrowDownRight size={16} />
-                  </a>
-                </div>
-              </article>
+
+          {/* Filter Pills (Matching Reference Screenshot Style) */}
+          <div className="mt-8 flex flex-wrap items-center gap-2 border-b border-stone-200/80 pb-4 overflow-x-auto">
+            {categories.map((cat) => (
+              <button
+                key={cat}
+                onClick={() => setSelectedCategory(cat)}
+                className={`rounded-full px-4 py-2 text-xs font-bold transition-all duration-200 whitespace-nowrap ${
+                  selectedCategory === cat
+                    ? "bg-slate-950 text-white shadow-md ring-2 ring-slate-950/20"
+                    : "bg-white text-slate-600 hover:bg-stone-200/80 border border-stone-200"
+                }`}
+              >
+                {cat}
+              </button>
             ))}
+          </div>
+
+          {/* Cards Grid (Matching Reference Screenshot Layout) */}
+          <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {filteredEquipment.map((item) => {
+              const waUrl = `https://wa.me/${phone}?text=${encodeURIComponent(item.whatsappMsg)}`;
+
+              return (
+                <article
+                  key={item.id}
+                  className="group flex flex-col justify-between overflow-hidden rounded-2xl border border-stone-200/90 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl"
+                >
+                  <div>
+                    {/* Image Container with Badges */}
+                    <div className="relative aspect-[4/3] w-full overflow-hidden bg-slate-950">
+                      <Image
+                        src={item.imgSrc}
+                        alt={item.title}
+                        fill
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        className="object-cover transition duration-700 group-hover:scale-105"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-black/20" />
+                      
+                      {/* Category Pill Top Left */}
+                      <span className="absolute top-3 left-3 rounded-full bg-slate-950/80 backdrop-blur-md px-3 py-1 text-[11px] font-bold text-white border border-white/10 shadow-sm">
+                        {item.category}
+                      </span>
+
+                      {/* Badge Top Right */}
+                      {item.badge && (
+                        <span className="absolute top-3 right-3 rounded-full bg-gradient-to-r from-amber-500 to-orange-500 px-3 py-1 text-[11px] font-extrabold text-slate-950 shadow-md">
+                          {item.badge}
+                        </span>
+                      )}
+
+                      {/* Specs Badge Bottom Left (Matching Screenshot specs pill) */}
+                      <div className="absolute bottom-3 left-3 flex items-center gap-1.5 rounded-full bg-slate-950/85 backdrop-blur-md px-3 py-1 text-xs font-bold text-slate-100 border border-white/15 shadow-md">
+                        <Truck size={14} className="text-amber-400 shrink-0" />
+                        <span>{item.specsBadge}</span>
+                      </div>
+                    </div>
+
+                    {/* Card Content */}
+                    <div className="p-6">
+                      <h3 className="text-xl font-bold text-slate-950 group-hover:text-orange-600 transition">
+                        {item.title}
+                      </h3>
+                      <p className="mt-2 text-xs leading-5 text-slate-600 sm:text-sm sm:leading-6">
+                        {item.description}
+                      </p>
+
+                      {/* Technical Specs Pills */}
+                      <div className="mt-4 flex flex-wrap gap-2">
+                        {item.specs.map((spec) => (
+                          <span
+                            key={spec.label}
+                            className="inline-flex items-center rounded-lg bg-stone-100 px-2.5 py-1 text-[11px] font-medium text-slate-700 border border-stone-200"
+                          >
+                            <strong className="font-bold text-slate-900 mr-1">{spec.label}:</strong> {spec.value}
+                          </span>
+                        ))}
+                      </div>
+
+                      {/* Key Features List */}
+                      <ul className="mt-5 space-y-2 border-t border-stone-100 pt-4">
+                        {item.features.map((feat) => (
+                          <li key={feat} className="flex items-center gap-2 text-xs font-semibold text-slate-700">
+                            <span className="flex h-4.5 w-4.5 shrink-0 items-center justify-center rounded-full bg-amber-400/30 text-slate-950">
+                              <Check size={11} className="text-orange-700 font-extrabold" />
+                            </span>
+                            <span>{feat}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  {/* Card Action Buttons (Matching Reference Screenshot) */}
+                  <div className="p-6 pt-0">
+                    <div className="flex items-center gap-2">
+                      <a
+                        href={waUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="button flex-1 justify-center rounded-xl py-3 text-xs font-bold shadow-md transition group-hover:bg-amber-400 group-hover:text-slate-950"
+                      >
+                        Solicitar Orçamento <ArrowDownRight size={16} />
+                      </a>
+                      <a
+                        href={waUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-emerald-500/40 bg-emerald-50 text-emerald-600 shadow-sm transition hover:bg-emerald-500 hover:text-white hover:border-emerald-500 active:scale-95"
+                        title="Conversar no WhatsApp"
+                        aria-label={`Solicitar ${item.title} pelo WhatsApp`}
+                      >
+                        <MessageCircle size={20} />
+                      </a>
+                    </div>
+                  </div>
+                </article>
+              );
+            })}
           </div>
         </div>
       </section>
