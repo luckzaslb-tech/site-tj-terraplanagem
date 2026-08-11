@@ -53,7 +53,7 @@ const equipmentData: EquipmentItem[] = [
     category: "Escavação",
     badge: "Mais procurado",
     specsBadge: "22 Toneladas • Caçamba 1.2m³",
-    imgSrc: "/images/escavadeira-hidraulica-card.png",
+    imgSrc: "/images/escavadeira-hidraulica-card.webp",
     description: "Potência e precisão extrema para escavações profundas, valas, abertura de fundações e grandes movimentações de terra.",
     features: [
       "Operador especializado incluso",
@@ -73,7 +73,7 @@ const equipmentData: EquipmentItem[] = [
     category: "Carregamento",
     badge: "Mais procurado",
     specsBadge: "Caçamba 2.5m³ • Tração 4x4",
-    imgSrc: "/images/pa-carregadeira-card.png",
+    imgSrc: "/images/pa-carregadeira-card.webp",
     description: "Agilidade e alta capacidade de carga para movimentação rápida de agregados, aterro, terra, pedras e abastecimento de caçambas.",
     features: [
       "Caçamba reforçada de 2.5m³",
@@ -93,7 +93,7 @@ const equipmentData: EquipmentItem[] = [
     category: "Nivelamento",
     badge: "Alta Precisão",
     specsBadge: "Lâmina 3.66m • Ripper Traseiro",
-    imgSrc: "/images/motoniveladora-patrol-card.png",
+    imgSrc: "/images/motoniveladora-patrol-card.webp",
     description: "Precisão cirúrgica no nivelamento de estradas, regularização de terrenos, conformação de taludes e espalhamento de material.",
     features: [
       "Lâmina articulada 360°",
@@ -113,7 +113,7 @@ const equipmentData: EquipmentItem[] = [
     category: "Compactação",
     badge: "Mais procurado",
     specsBadge: "11.5 Toneladas • Liso / Pé de carneiro",
-    imgSrc: "/images/rolo-compactador-card.png",
+    imgSrc: "/images/rolo-compactador-card.webp",
     description: "Alta capacidade de compactação para solos, aterros, sub-bases e pavimentação, garantindo máxima estabilidade do terreno.",
     features: [
       "Tambor liso e pé de carneiro",
@@ -133,7 +133,7 @@ const equipmentData: EquipmentItem[] = [
     category: "Versátil",
     badge: "Multiuso",
     specsBadge: "Tração 4x4 • Caçamba Dupla",
-    imgSrc: "/images/retroescavadeira-card.png",
+    imgSrc: "/images/retroescavadeira-card.webp",
     description: "A máquina multiuso versátil para obras urbanas e rurais. Une a força da pá carregadeira dianteira com o braço escavador traseiro.",
     features: [
       "Pá carregadeira dianteira 1.0m³",
@@ -153,7 +153,7 @@ const equipmentData: EquipmentItem[] = [
     category: "Transporte",
     badge: "Frota Pesada",
     specsBadge: "Caçamba 15m³ • Tração 6x4",
-    imgSrc: "/images/caminhao-basculante-card.png",
+    imgSrc: "/images/caminhao-basculante-card.webp",
     description: "Transporte eficiente e escoamento rápido de terra, pedras, entulho e materiais de aterro para manter a obra em ritmo acelerado.",
     features: [
       "Caçamba reforçada de 15m³",
@@ -173,7 +173,7 @@ const equipmentData: EquipmentItem[] = [
     category: "Corte & Desmatamento",
     badge: "Serviço Pesado",
     specsBadge: "18.5 Toneladas • Lâmina Semi-U",
-    imgSrc: "/images/trator-esteira-card.png",
+    imgSrc: "/images/trator-esteira-card.webp",
     description: "Força bruta para corte de solos duros, destoca, limpeza de vegetação, nivelamento bruto e abertura de caminhos em terreno difícil.",
     features: [
       "Esteiras de alta flutuação",
@@ -386,7 +386,7 @@ export default function Home() {
       <section id="sobre" className="section">
         <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-2 lg:items-center lg:gap-20 lg:px-8">
           <div className="relative overflow-hidden rounded-2xl shadow-xl">
-            <Image src="/images/escavadeira-hidraulica.png" alt="Escavadeira da TJ Terraplanagem em operação" width={696} height={687} className="aspect-square w-full object-cover" />
+            <Image src="/images/escavadeira-hidraulica.webp" alt="Escavadeira da TJ Terraplanagem em operação" width={696} height={687} className="aspect-square w-full object-cover" priority={false} loading="lazy" />
             <div className="absolute bottom-4 right-4 rounded-xl bg-amber-400 px-5 py-3.5 text-slate-950 shadow-lg sm:bottom-6 sm:right-6">
               <strong className="block font-display text-3xl leading-none sm:text-4xl">TJ</strong>
               <span className="text-[10px] font-bold uppercase tracking-[.18em]">Terraplanagem</span>
@@ -640,9 +640,9 @@ export default function Home() {
       {/* CTA Section */}
       <section className="relative isolate overflow-hidden bg-slate-950 py-20 text-white sm:py-32">
         <div className="absolute inset-0 -z-20 grid h-full w-full grid-cols-1 md:grid-cols-3">
-          <div className="relative h-full w-full min-h-[220px]"><Image src="/images/escavadeira-hidraulica.png" alt="Escavadeira Hidráulica" fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover" /></div>
-          <div className="relative h-full w-full min-h-[220px]"><Image src="/images/maquinas-para-terraplanagem.png" alt="Máquinas para Terraplanagem" fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover" /></div>
-          <div className="relative h-full w-full min-h-[220px]"><Image src="/images/operacao-especializada.png" alt="Operação Especializada" fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover" /></div>
+          <div className="relative h-full w-full min-h-[220px]"><Image src="/images/escavadeira-hidraulica.webp" alt="Escavadeira Hidráulica" fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover" loading="lazy" /></div>
+          <div className="relative h-full w-full min-h-[220px]"><Image src="/images/maquinas-para-terraplanagem.webp" alt="Máquinas para Terraplanagem" fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover" loading="lazy" /></div>
+          <div className="relative h-full w-full min-h-[220px]"><Image src="/images/operacao-especializada.webp" alt="Operação Especializada" fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover" loading="lazy" /></div>
         </div>
         <div className="absolute inset-0 -z-10 bg-slate-950/80 backdrop-blur-[1px]" />
         <div className="relative z-10 mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
