@@ -420,7 +420,7 @@ export default function Home() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="max-w-2xl">
             <p className="eyebrow">O que fazemos</p>
-            <h2 className="headline text-white">Soluções que movem sua obra.</h2>
+            <h2 className="headline !text-white" style={{ color: '#ffffff' }}>Soluções que movem sua obra.</h2>
             <p className="mt-4 text-sm leading-6 text-slate-300 sm:text-base sm:leading-7">
               Estrutura, técnica e os equipamentos certos para transformar seu terreno em um novo começo.
             </p>
