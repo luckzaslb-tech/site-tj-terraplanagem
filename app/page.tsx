@@ -4,9 +4,11 @@ import Image from "next/image";
 import {
   ArrowDownRight,
   Check,
+  ChevronDown,
   ChevronRight,
   Clock3,
   HardHat,
+  HelpCircle,
   Home as HomeIcon,
   Instagram,
   Layers,
@@ -14,6 +16,7 @@ import {
   Menu,
   MessageCircle,
   Phone,
+  ShieldCheck,
   Star,
   Truck,
   X,
@@ -32,6 +35,30 @@ const services = [
   ["03", "Aterros e nivelamento", "Regularização de terrenos com técnica, agilidade e acabamento profissional."],
   ["04", "Locação de equipamentos", "Máquinas confiáveis para manter o ritmo e a produtividade da sua obra."],
 ];
+
+const faqs = [
+  {
+    question: "Quais cidades e regiões a TJ Terraplanagem atende?",
+    answer: "Atendemos principalmente Paraíba do Sul, Três Rios, Areal, Comendador Levy Gasparian, Petrópolis, Região Serrana e todo o Centro-Sul Fluminense com deslocamento ágil de maquinário e atendimento no local.",
+  },
+  {
+    question: "As máquinas pesadas são locadas com operador especializado?",
+    answer: "Sim! Toda a nossa frota de escavadeiras, pás carregadeiras, motoniveladoras (patrol), rolos compactadores, tratores e caminhões conta com operadores altamente capacitados e experientes, garantindo segurança e alto rendimento.",
+  },
+  {
+    question: "Como solicitar um orçamento de terraplanagem ou locação?",
+    answer: "Você pode solicitar um orçamento de forma rápida clicando em qualquer botão de WhatsApp aqui no site ou ligando para (24) 98102-3864. Informe a cidade da obra e o tipo de serviço para receber atendimento imediato.",
+  },
+  {
+    question: "Quais serviços de terraplanagem vocês executam?",
+    answer: "Realizamos corte e aterro, nivelamento e regularização de solos, escavações para fundações, baldrames e piscinas, limpeza de terrenos, desassoreamento e abertura ou manutenção de estradas e acessos.",
+  },
+  {
+    question: "Vocês realizam visita técnica no terreno antes de iniciar?",
+    answer: "Sim! Realizamos vistoria técnica no local da obra para avaliar o tipo de terreno, calcular a necessidade de corte/aterro e indicar as máquinas com o melhor custo-benefício para o seu projeto.",
+  },
+];
+
 
 interface EquipmentItem {
   id: string;
@@ -199,6 +226,8 @@ export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("Toda a frota");
+  const [openFaq, setOpenFaq] = useState<number | null>(0);
+  const [seoTermsOpen, setSeoTermsOpen] = useState(false);
 
   const categories = [
     "Toda a frota",
@@ -279,7 +308,7 @@ export default function Home() {
             </span>
           </a>
           <nav className="hidden items-center gap-7 text-sm font-medium text-white/85 lg:flex" aria-label="Navegação principal">
-            {[["Sobre", "sobre"], ["Serviços", "servicos"], ["Equipamentos", "equipamentos"], ["Galeria", "galeria"], ["Contato", "contato"]].map(([label, id]) => (
+            {[["Sobre", "sobre"], ["Serviços", "servicos"], ["Equipamentos", "equipamentos"], ["Galeria", "galeria"], ["Dúvidas", "duvidas"], ["Contato", "contato"]].map(([label, id]) => (
               <a key={id} href={`#${id}`} className="transition hover:text-amber-400">{label}</a>
             ))}
             <a href={whatsapp} target="_blank" rel="noreferrer" className="button button-small rounded-lg">
@@ -304,7 +333,7 @@ export default function Home() {
         {/* Mobile Dropdown Drawer */}
         {menuOpen && (
           <nav className="mx-4 mt-2 grid gap-2 rounded-2xl border border-white/15 bg-slate-950/95 p-5 text-white shadow-2xl backdrop-blur-xl lg:hidden" aria-label="Menu mobile">
-            {[["Sobre", "sobre"], ["Serviços", "servicos"], ["Equipamentos", "equipamentos"], ["Galeria", "galeria"], ["Contato", "contato"]].map(([label, id]) => (
+            {[["Sobre", "sobre"], ["Serviços", "servicos"], ["Equipamentos", "equipamentos"], ["Galeria", "galeria"], ["Dúvidas", "duvidas"], ["Contato", "contato"]].map(([label, id]) => (
               <a
                 onClick={() => setMenuOpen(false)}
                 key={id}
@@ -637,6 +666,78 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Perguntas Frequentes / FAQ (SEO Local & Rich Snippets) */}
+      <section id="duvidas" className="section bg-stone-100">
+        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <p className="eyebrow eyebrow-dark">Tire suas dúvidas</p>
+            <h2 className="headline">Perguntas frequentes sobre terraplanagem e locação.</h2>
+            <p className="mx-auto mt-3 max-w-2xl text-sm leading-6 text-slate-600 sm:text-base">
+              Tudo o que você precisa saber para planejar o início da sua obra com total clareza e segurança.
+            </p>
+          </div>
+
+          <div className="mt-12 space-y-4">
+            {faqs.map((faq, idx) => {
+              const isOpen = openFaq === idx;
+              return (
+                <div
+                  key={faq.question}
+                  className="overflow-hidden rounded-2xl border border-stone-200 bg-white shadow-sm transition duration-200 hover:border-amber-400"
+                >
+                  <button
+                    onClick={() => setOpenFaq(isOpen ? null : idx)}
+                    className="flex w-full items-center justify-between gap-4 p-5 text-left font-bold text-slate-900 transition sm:p-6"
+                    aria-expanded={isOpen}
+                  >
+                    <span className="flex items-center gap-3 text-base sm:text-lg">
+                      <HelpCircle size={20} className="shrink-0 text-amber-500" />
+                      {faq.question}
+                    </span>
+                    <ChevronDown
+                      size={20}
+                      className={`shrink-0 text-slate-400 transition-transform duration-200 ${
+                        isOpen ? "rotate-180 text-amber-500" : ""
+                      }`}
+                    />
+                  </button>
+                  {isOpen && (
+                    <div className="border-t border-stone-100 bg-stone-50/70 px-5 pb-6 pt-4 text-sm leading-relaxed text-slate-600 sm:px-6 sm:text-base">
+                      <p>{faq.answer}</p>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Banner de Cidades e Região Atendida */}
+          <div className="mt-12 rounded-2xl border border-amber-300/80 bg-gradient-to-r from-amber-50 via-amber-100/50 to-orange-50 p-6 sm:p-8 shadow-sm">
+            <div className="flex flex-col items-center gap-4 text-center md:flex-row md:items-center md:justify-between md:text-left">
+              <div>
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-amber-400/30 px-3 py-1 text-xs font-black uppercase tracking-wider text-amber-900">
+                  <MapPin size={14} className="text-amber-700" /> Cidades Atendidas
+                </span>
+                <h3 className="mt-2 text-xl font-bold text-slate-900 sm:text-2xl">
+                  Atendimento em Paraíba do Sul e Centro-Sul Fluminense
+                </h3>
+                <p className="mt-1 text-sm text-slate-700">
+                  Paraíba do Sul • Três Rios • Areal • Levy Gasparian • Petrópolis • Sapucaia • Região Serrana
+                </p>
+              </div>
+              <a
+                href={whatsapp}
+                target="_blank"
+                rel="noreferrer"
+                className="button shrink-0 rounded-xl px-6 py-3 text-xs font-bold uppercase tracking-wider shadow-md"
+              >
+                Consultar Disponibilidade <ArrowDownRight size={16} />
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* CTA Section */}
       <section className="relative isolate overflow-hidden bg-slate-950 py-20 text-white sm:py-32">
         <div className="absolute inset-0 -z-20 grid h-full w-full grid-cols-1 md:grid-cols-3">
@@ -697,6 +798,74 @@ export default function Home() {
             </div>
           </div>
         </div>
+
+        {/* SEO Keywords & Regional Coverage Drawer / Collapsible */}
+        <div className="border-t border-stone-200/60 bg-stone-100/60 py-3">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="flex flex-col items-center justify-between gap-2 sm:flex-row">
+              <button
+                onClick={() => setSeoTermsOpen(!seoTermsOpen)}
+                className="group inline-flex items-center gap-1.5 text-[11px] font-medium text-slate-500 transition hover:text-slate-900"
+                aria-expanded={seoTermsOpen}
+              >
+                <span>📍 Cidades Atendidas & Cobertura Regional (Raio de 100km)</span>
+                <ChevronDown
+                  size={14}
+                  className={`transition-transform duration-200 ${seoTermsOpen ? "rotate-180 text-amber-600" : ""}`}
+                />
+              </button>
+              <span className="text-[10px] text-slate-400">RJ & MG • Paraíba do Sul e Região</span>
+            </div>
+
+            {seoTermsOpen && (
+              <div className="mt-4 rounded-xl border border-stone-200 bg-white p-5 text-xs text-slate-600 shadow-sm">
+                <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-4">
+                  <div>
+                    <h4 className="font-bold mb-2 uppercase text-[10px] tracking-wider text-amber-800">
+                      Centro-Sul & Vale do Paraíba (RJ)
+                    </h4>
+                    <p className="leading-relaxed text-[11px] text-slate-600">
+                      Paraíba do Sul, Três Rios, Areal, Comendador Levy Gasparian, Sapucaia, Paty do Alferes, Miguel Pereira, Vassouras, Valença, Rio das Flores, Mendes, Eng. Paulo de Frontin, Barra do Piraí, Piraí, Pinheiral, Volta Redonda, Barra Mansa, Paracambi.
+                    </p>
+                  </div>
+
+                  <div>
+                    <h4 className="font-bold mb-2 uppercase text-[10px] tracking-wider text-amber-800">
+                      Região Serrana & Norte (RJ)
+                    </h4>
+                    <p className="leading-relaxed text-[11px] text-slate-600">
+                      Petrópolis, Itaipava, Pedro do Rio, Posse, Corrêas, Araras, Secretário, Teresópolis, São José do Vale do Rio Preto, Nova Friburgo, Sumidouro, Carmo, Cantagalo, Duas Barras, Guapimirim, Magé, Xerém, Duque de Caxias.
+                    </p>
+                  </div>
+
+                  <div>
+                    <h4 className="font-bold mb-2 uppercase text-[10px] tracking-wider text-amber-800">
+                      Zona da Mata & Sul de Minas (MG)
+                    </h4>
+                    <p className="leading-relaxed text-[11px] text-slate-600">
+                      Juiz de Fora, Matias Barbosa, Simão Pereira, Belmiro Braga, Santana do Deserto, Chiador, Mar de Espanha, Além Paraíba, Pequeri, Bicas, Guarará, Maripá de Minas, Santos Dumont, Santa Rita de Jacutinga, Rio Preto.
+                    </p>
+                  </div>
+
+                  <div>
+                    <h4 className="font-bold mb-2 uppercase text-[10px] tracking-wider text-amber-800">
+                      Serviços de Terraplanagem & Frota
+                    </h4>
+                    <p className="leading-relaxed text-[11px] text-slate-600">
+                      Terraplanagem, terraplenagem, escavação de baldrames e piscinas, corte e aterro, nivelamento de lotes, compactação mecânica, abertura de estradas rurais, limpeza de terreno, drenagem pluvial, escavadeira hidráulica 22t, retroescavadeira 4x4, pá carregadeira, patrol motoniveladora, rolo compactador, caminhão basculante 6x4 15m³.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="mt-4 pt-3 border-t border-stone-100 flex flex-wrap gap-1.5 text-[10px] text-slate-500">
+                  <span className="font-semibold text-slate-700">Distritos locais:</span>
+                  <span>Werneck • Inconfidência (Sebollas) • Vila Salutaris • Barão de Angra • Jatobá • Bemposta • Pilões • Moura Brasil • Cantagalo • Monte Castelo • Purys • Palmital • Afonso Arinos • Anta • Jamapará</span>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+
         <div className="border-t border-stone-200 bg-stone-50 py-6">
           <div className="mx-auto flex max-w-7xl flex-col items-center gap-2 px-4 text-center text-xs text-slate-500 sm:flex-row sm:justify-between sm:text-left lg:px-8">
             <span>© {new Date().getFullYear()} TJ Terraplanagem LTDA. Todos os direitos reservados.</span>
